@@ -25,6 +25,7 @@ const useStyles = makeStyles({
   },
   button: {
     border: "1px solid #99958b",
+    color: "#fff8e7",
   },
 });
 
