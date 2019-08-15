@@ -39,6 +39,9 @@ const useStyles = makeStyles({
   link: {
     textDecoration: "none",
   },
+  logoContainer: {
+    display: "flex",
+  },
 });
 
 function ContentCard({ data, setUpdated, updated }) {
@@ -71,7 +74,7 @@ function ContentCard({ data, setUpdated, updated }) {
       {data.map(v => (
         <div className={classes.cardWrapper} key={v._id}>
           <div className={classes.title}>{`- ${v.question}`}</div>
-          <div>
+          <div className={classes.logoContainer}>
             <Button
               key={v._id}
               onClick={() => {
