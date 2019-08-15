@@ -22,7 +22,7 @@ function Header() {
     <AppBar position="static" color="inherit" elevation={0}>
       <Toolbar className={classes.root}>
         <Link to="/">
-          <img src="./static/logo.PNG" width="80" height="25" />
+          <img src="./static/logo.PNG" width="80" height="25" alt="logo" />
         </Link>
       </Toolbar>
     </AppBar>
