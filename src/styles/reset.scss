@@ -1,6 +1,7 @@
 // http://meyerweb.com/eric/tools/css/reset/
 //  v2.0 | 20110126
 //  License: none (public domain)
+@import url('https://fonts.googleapis.com/css?family=Nanum+Gothic+Coding&display=swap');
 
 html,
 body,
@@ -108,6 +109,7 @@ section {
 }
 
 body {
+  font-family: 'Nanum Gothic Coding', monospace;
   background-color: #fff8e7;
   font-size: 10px;
   line-height: 1;
