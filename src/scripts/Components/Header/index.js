@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 // css-in-js
 import { makeStyles } from "@material-ui/styles";
 import { AppBar, Toolbar } from "@material-ui/core";
@@ -19,7 +20,11 @@ function Header() {
 
   return (
     <AppBar position="static" color="inherit" elevation={0}>
-      <Toolbar className={classes.root}>Heritage</Toolbar>
+      <Toolbar className={classes.root}>
+        <Link to="/">
+          <img src="./static/logo.PNG" width="80" height="25" />
+        </Link>
+      </Toolbar>
     </AppBar>
   );
 }
