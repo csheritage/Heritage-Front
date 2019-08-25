@@ -20,6 +20,8 @@ function PageRouter() {
         <div style={{ display: "flex" }}>
           <Route component={LeftNav} />
           <Switch>
+            {/* 404 page */}
+            <Route exact path="/404" component={NoMatch} />
             {/* root Page */}
             <Route exact path="/" component={Main} />
             <Route exact path="/create" component={Create} />
@@ -27,8 +29,6 @@ function PageRouter() {
             <Route exact path="/exam" component={Exam} />
             <Route exact path="/exam/:class" component={ExamCardList} />
             <Route path="/:class" component={Content} />
-            {/* 404 page */}
-            <Route component={NoMatch} />
           </Switch>
         </div>
         <Route component={Footer} />
