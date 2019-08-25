@@ -1,10 +1,11 @@
 import React from "react";
-import { withRouter } from "react-router";
+import { withRouter, Redirect } from "react-router";
 // css-in-js
 import { makeStyles } from "@material-ui/styles";
 import { LinearProgress } from "@material-ui/core";
 // custom-components
 import ContentCard from "./ContentCard";
+import handleFetchError from "../../../util/handleFetchError";
 
 const useStyles = makeStyles({
   content: {
@@ -33,6 +34,8 @@ function Content({ match }) {
   const classes = useStyles();
   const [splitedData, setSplitedData] = React.useState({ loading: "loading" });
   const [updated, setUpdated] = React.useState(0);
+  const [error, setError] = React.useState(false);
+
   React.useEffect(() => {
     setSplitedData({ loading: "loading" });
     const url = `https://the-heritage.herokuapp.com/${match.params.class}`;
@@ -43,15 +46,21 @@ function Content({ match }) {
       headers: { "Content-Type": "application/json" },
     };
 
-    fetch(url, init).then(res => {
-      res.json().then(jsonData => {
-        setSplitedData(filteredByCompany(jsonData.questions));
+    fetch(url, init)
+      .then(handleFetchError)
+      .then(res => {
+        res.json().then(jsonData => {
+          setSplitedData(filteredByCompany(jsonData.questions));
+        });
+      })
+      .catch(error => {
+        setError(true);
       });
-    });
   }, [match, updated]);
 
   return (
     <div className={classes.cardWrapper}>
+      {error && <Redirect push to="404" />}
       {Object.keys(splitedData).map(data =>
         data === "loading" ? (
           <LinearProgress key={data} />
