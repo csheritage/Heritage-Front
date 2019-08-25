@@ -1,12 +1,13 @@
 import React from "react";
 // SPA main
 import PageRouter from "./Routers/index";
+import GlobalThemeProvider from "./Components/GlobalTheme";
 
 function App() {
   return (
-    <div className="App">
+    <GlobalThemeProvider>
       <PageRouter />
-    </div>
+    </GlobalThemeProvider>
   );
 }
 
