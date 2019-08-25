@@ -1,26 +1,28 @@
 import React from "react";
 import { Link } from "react-router-dom";
 // css-in-js
-import { makeStyles } from "@material-ui/styles";
+import { makeStyles, useTheme } from "@material-ui/styles";
 import { ListItem, ListItemText, LinearProgress } from "@material-ui/core";
 
 const useStyles = makeStyles({
-  root: {
+  root: ({ jettBlack }) => ({
+    backgroundColor: jettBlack[300],
     width: "20vw",
     height: "100vh",
-    backgroundColor: "#99958b",
-  },
-  content: {
+  }),
+  content: ({ jettBlack }) => ({
+    color: jettBlack[500],
     height: "3rem",
-    color: "#fff8e7",
-  },
+  }),
   link: {
     textDecoration: "none",
   },
 });
 
 function LeftNav() {
-  const classes = useStyles();
+  const { palette } = useTheme();
+  const classes = useStyles({ jettBlack: palette.jettBlack });
+
   const [list, setList] = React.useState(["loading"]);
 
   React.useEffect(() => {

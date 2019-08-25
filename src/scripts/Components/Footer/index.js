@@ -1,21 +1,17 @@
 import React from "react";
 // css-in-js
-import { makeStyles } from "@material-ui/styles";
+import { makeStyles, useTheme } from "@material-ui/styles";
 import Grid from "@material-ui/core/Grid";
 
 const useStyles = makeStyles({
-  root: {
+  root: ({ jettBlack }) => ({
     fontFamily: "'Apple SD Gothic Neo', sans-serif",
-    backgroundColor: "#45433e",
+    backgroundColor: jettBlack[100],
     height: "4rem",
-    borderTop: `0.1rem solid #999`,
-  },
-  fakeFontLoader: {
-    fontFamily: "'Nanum Barun Gothic'",
-  },
-  copyright: {
-    color: "#fff8e7",
-  },
+  }),
+  copyright: ({ jettBlack }) => ({
+    color: jettBlack[500],
+  }),
   gridRoot: {
     height: "100%",
   },
@@ -24,7 +20,8 @@ const useStyles = makeStyles({
 const footerMsg = `무단 배포를 엄금합니다.`;
 
 function Footer() {
-  const classes = useStyles();
+  const { palette } = useTheme();
+  const classes = useStyles({ jettBlack: palette.jettBlack });
 
   return (
     <footer className={classes.root} id="footer">

@@ -1,22 +1,22 @@
 import React from "react";
 import { Link } from "react-router-dom";
 // css-in-js
-import { makeStyles } from "@material-ui/styles";
+import { makeStyles, useTheme } from "@material-ui/styles";
 import { AppBar, Toolbar } from "@material-ui/core";
 
 const useStyles = makeStyles({
-  root: {
-    backgroundColor: "#45433e",
-    color: "#fff8e7",
-    borderBottom: `0.1rem solid #666`,
+  root: ({ jettBlack }) => ({
+    backgroundColor: jettBlack[100],
+    color: jettBlack[500],
     height: "4rem",
     justifyContent: "space-between",
     padding: "0 8rem",
-  },
+  }),
 });
 
 function Header() {
-  const classes = useStyles();
+  const { palette } = useTheme();
+  const classes = useStyles({ jettBlack: palette.jettBlack });
 
   return (
     <AppBar position="static" color="inherit" elevation={0}>
