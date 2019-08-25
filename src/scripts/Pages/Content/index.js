@@ -1,23 +1,23 @@
 import React from "react";
 import { withRouter, Redirect } from "react-router";
 // css-in-js
-import { makeStyles } from "@material-ui/styles";
+import { makeStyles, useTheme } from "@material-ui/styles";
 import { LinearProgress } from "@material-ui/core";
 // custom-components
 import ContentCard from "./ContentCard";
 import handleFetchError from "../../../util/handleFetchError";
 
 const useStyles = makeStyles({
-  content: {
+  content: ({ jettBlack }) => ({
     height: "3rem",
-    color: "#fff8e7",
-  },
-  cardWrapper: {
+    color: jettBlack[500],
+  }),
+  cardWrapper: ({ jettBlack }) => ({
     width: "100%",
     display: "flex",
     flexDirection: "column",
-    backgroundColor: "#99958b",
-  },
+    backgroundColor: jettBlack[300],
+  }),
 });
 
 function filteredByCompany(data) {
@@ -31,7 +31,9 @@ function filteredByCompany(data) {
 }
 
 function Content({ match }) {
-  const classes = useStyles();
+  const { palette } = useTheme();
+  const classes = useStyles({ jettBlack: palette.jettBlack });
+
   const [splitedData, setSplitedData] = React.useState({ loading: "loading" });
   const [updated, setUpdated] = React.useState(0);
   const [error, setError] = React.useState(false);
