@@ -14,8 +14,9 @@
 
 ## Built With
 
-- [React](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-- [Material-UI](https://maven.apache.org/) - Dependency Management
+- [React]
+- [Material-UI]
+- [TypeScript]
 
 ## Versioning
 
@@ -25,8 +26,4 @@
 
 왕민, 흰, 헤드, 그램
 
-각각의 제작자 깃 리포
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+각각의 제작자 github주소
