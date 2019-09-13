@@ -20,8 +20,8 @@ const useStyles = makeStyles({
 const footerMsg = `무단 배포를 엄금합니다.`;
 
 function Footer() {
-  const { palette } = useTheme();
-  const classes = useStyles({ jettBlack: palette.jettBlack });
+  const { jettBlack } = useTheme();
+  const classes = useStyles({ jettBlack });
 
   return (
     <footer className={classes.root} id="footer">

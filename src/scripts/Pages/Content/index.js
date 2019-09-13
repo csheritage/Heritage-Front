@@ -31,8 +31,8 @@ function filteredByCompany(data) {
 }
 
 function Content({ match }) {
-  const { palette } = useTheme();
-  const classes = useStyles({ jettBlack: palette.jettBlack });
+  const { jettBlack } = useTheme();
+  const classes = useStyles({ jettBlack });
 
   const [splitedData, setSplitedData] = React.useState({ loading: "loading" });
   const [updated, setUpdated] = React.useState(0);

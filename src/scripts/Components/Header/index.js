@@ -15,8 +15,8 @@ const useStyles = makeStyles({
 });
 
 function Header() {
-  const { palette } = useTheme();
-  const classes = useStyles({ jettBlack: palette.jettBlack });
+  const { jettBlack } = useTheme();
+  const classes = useStyles({ jettBlack });
 
   return (
     <AppBar position="static" color="inherit" elevation={0}>

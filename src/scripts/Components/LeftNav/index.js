@@ -20,8 +20,8 @@ const useStyles = makeStyles({
 });
 
 function LeftNav() {
-  const { palette } = useTheme();
-  const classes = useStyles({ jettBlack: palette.jettBlack });
+  const { jettBlack } = useTheme();
+  const classes = useStyles({ jettBlack });
 
   const [list, setList] = React.useState(["loading"]);
 

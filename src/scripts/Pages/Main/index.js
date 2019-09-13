@@ -25,8 +25,8 @@ const useStyles = makeStyles({
 });
 
 function Main() {
-  const { palette } = useTheme();
-  const classes = useStyles({ jettBlack: palette.jettBlack });
+  const { jettBlack } = useTheme();
+  const classes = useStyles({ jettBlack });
 
   return (
     <div className={classes.root}>

@@ -11,8 +11,8 @@ const useStyles = makeStyles({
 });
 
 function NoMatch() {
-  const { palette } = useTheme();
-  const classes = useStyles({ jettBlack: palette.jettBlack });
+  const { jettBlack } = useTheme();
+  const classes = useStyles({ jettBlack });
 
   return (
     <Grid container justify="center" alignItems="center" className={classes.root}>
