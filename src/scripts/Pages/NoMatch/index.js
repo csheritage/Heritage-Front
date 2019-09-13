@@ -1,17 +1,24 @@
 import React from "react";
 // css-in-js
-import { makeStyles } from "@material-ui/styles";
+import { makeStyles, useTheme } from "@material-ui/styles";
+import { Grid } from "@material-ui/core";
 
 const useStyles = makeStyles({
-  root: {
+  root: ({ jettBlack }) => ({
     height: "80vh",
-    color: "#000",
-  },
+    color: jettBlack[500],
+  }),
 });
 
 function NoMatch() {
-  const classes = useStyles();
-  return <div className={classes.root}>404 페이지 낫 파운드!</div>;
+  const { jettBlack } = useTheme();
+  const classes = useStyles({ jettBlack });
+
+  return (
+    <Grid container justify="center" alignItems="center" className={classes.root}>
+      404 페이지 낫 파운드!
+    </Grid>
+  );
 }
 
 export default NoMatch;
