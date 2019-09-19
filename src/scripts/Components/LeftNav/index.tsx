@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 // Type
-import { fetchInitType } from "./LeftNav.type";
+import { FetchInitType } from "@type/FetchInit";
 // CSS-In-JS
 import { makeStyles, Theme } from "@material-ui/core";
 import { ListItem, ListItemText, LinearProgress } from "@material-ui/core";
@@ -28,7 +28,7 @@ function LeftNav() {
 
   const fetchCategories = async () => {
     const url = "https://the-heritage.herokuapp.com/categories";
-    const fetchInit: fetchInitType = {
+    const fetchInit: FetchInitType = {
       method: "GET",
       mode: "cors",
       headers: { "Content-Type": "application/json" },
