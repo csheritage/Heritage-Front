@@ -1,43 +1,45 @@
 import React from "react";
 import { Link } from "react-router-dom";
-// css-in-js
-import { makeStyles, useTheme } from "@material-ui/styles";
+// Type
+import { fetchInitType } from "./LeftNav.type";
+// CSS-In-JS
+import { makeStyles, Theme } from "@material-ui/core";
 import { ListItem, ListItemText, LinearProgress } from "@material-ui/core";
 
-const useStyles = makeStyles({
-  root: ({ jettBlack }) => ({
-    backgroundColor: jettBlack[300],
+const useStyles = makeStyles((theme: Theme) => ({
+  root: {
+    backgroundColor: theme.jettBlack[300],
     width: "20vw",
     height: "100vh",
-  }),
-  content: ({ jettBlack }) => ({
-    color: jettBlack[500],
+  },
+  content: {
+    color: theme.jettBlack[500],
     height: "3rem",
-  }),
+  },
   link: {
     textDecoration: "none",
   },
-});
+}));
 
 function LeftNav() {
-  const { jettBlack } = useTheme();
-  const classes = useStyles({ jettBlack });
+  const classes = useStyles();
 
   const [list, setList] = React.useState(["loading"]);
 
-  React.useEffect(() => {
+  const fetchCategories = async () => {
     const url = "https://the-heritage.herokuapp.com/categories";
-    const init = {
+    const fetchInit: fetchInitType = {
       method: "GET",
       mode: "cors",
       headers: { "Content-Type": "application/json" },
     };
+    const fetchRes = await fetch(url, fetchInit);
+    const jsonData = await fetchRes.json();
+    setList(jsonData.categories);
+  };
 
-    fetch(url, init).then(res => {
-      res.json().then(jsonData => {
-        setList(jsonData.categories);
-      });
-    });
+  React.useEffect(() => {
+    fetchCategories();
   }, []);
 
   return (
