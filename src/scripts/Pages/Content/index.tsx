@@ -8,7 +8,6 @@ import { makeStyles, Theme } from "@material-ui/core";
 import { LinearProgress } from "@material-ui/core";
 // Custom-Components
 import ContentCard from "./ContentCard";
-import handleFetchError from "util/handleFetchError";
 
 const useStyles = makeStyles((theme: Theme) => ({
   content: {
@@ -39,7 +38,7 @@ const Content: React.FC<RouteComponentProps<ContentMatchParams>> = ({ match }) =
   const [splitedData, setSplitedData] = React.useState<any>({ loading: "loading" });
   const [updated, setUpdated] = React.useState(0);
   const [error, setError] = React.useState(false);
-  console.log(splitedData);
+
   const fetchCategoryQuestions = async () => {
     const url = `https://the-heritage.herokuapp.com/${match.params.class}`;
 
