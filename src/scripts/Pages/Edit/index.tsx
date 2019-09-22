@@ -45,7 +45,7 @@ const useStyles = makeStyles({
 
 const Editor: React.FC<RouteComponentProps<EditorMatchParams>> = ({ match }) => {
   const classes = useStyles();
-  const [values, setValues] = React.useState({ loading: "loading" });
+  const [values, setValues] = React.useState<any>({ loading: "loading" });
   const [saved, setSaved] = React.useState(false);
   const [openSanckbar, setOpenSnackbar] = React.useState(false);
   const [list, setList] = React.useState([]);
@@ -78,40 +78,10 @@ const Editor: React.FC<RouteComponentProps<EditorMatchParams>> = ({ match }) => 
     });
   };
   React.useEffect(() => {
-    const url = "https://the-heritage.herokuapp.com/categories";
-    const init = {
-      method: "GET",
-      mode: "cors",
-      headers: { "Content-Type": "application/json" },
-    };
-
-    fetch(url, init).then(res => {
-      res.json().then(jsonData => {
-        const categories = jsonData.categories.map(v => {
-          return { value: v, label: v };
-        });
-        setList(categories);
-      });
-    });
-
-    const dataUrl = `https://the-heritage.herokuapp.com/heritage/?_id=${match.params.id}`;
-    const dataInit = {
-      method: "GET",
-      mode: "cors",
-    };
-
-    fetch(dataUrl, dataInit).then(res => {
-      res.json().then(jsonData => {
-        setValues({
-          class: jsonData.category,
-          company: jsonData.company,
-          question: jsonData.question,
-        });
-      });
-    });
+    editCategories();
   }, [match]);
 
-  const handleChange = name => event => {
+  const handleChange = (name: any) => (event: any) => {
     setValues({ ...values, [name]: event.target.value });
   };
 
@@ -126,17 +96,16 @@ const Editor: React.FC<RouteComponentProps<EditorMatchParams>> = ({ match }) => 
       company: values.company,
       question: values.question,
     };
-    const init = {
+    const init: FetchInitType = {
       method: "PUT",
       mode: "cors",
       body: JSON.stringify(obj),
       headers: { "Content-Type": "application/json" },
     };
-    await fetch(url, init).then(res => {
-      if (res.status === 200) {
-        setSaved(true);
-      }
-    });
+    const fetchedData = await fetch(url, init);
+    if (fetchedData.status === 200) {
+      setSaved(true);
+    }
   };
   return values.loading === "loading" ? (
     <div className={classes.loaderWrapper}>
@@ -160,7 +129,7 @@ const Editor: React.FC<RouteComponentProps<EditorMatchParams>> = ({ match }) => 
             }}
             margin="normal"
             variant="outlined">
-            {list.map(option => (
+            {list.map((option: any) => (
               <MenuItem key={option.value} value={option.value}>
                 {option.label}
               </MenuItem>
