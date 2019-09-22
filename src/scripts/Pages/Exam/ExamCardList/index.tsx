@@ -1,11 +1,13 @@
 import React from "react";
-import { withRouter } from "react-router";
-
-// css-in-js
+import { withRouter, RouteComponentProps } from "react-router";
+// Type
+import { ExamCardList } from "./ExamCardList.type";
+// CSS-In-JS
 import { makeStyles } from "@material-ui/styles";
 import { LinearProgress } from "@material-ui/core";
 // custom-components
 import ExamCard from "./ExamCard";
+import { FetchInitType } from "@type/FetchInit";
 
 const useStyles = makeStyles({
   content: {
@@ -29,7 +31,7 @@ const useStyles = makeStyles({
   },
 });
 
-function ExamCardList({ match }) {
+const ExamCardList: React.FC<RouteComponentProps<ExamCardList>> = ({ match }) => {
   const classes = useStyles();
   const [questions, setQuestions] = React.useState(["loading"]);
 
@@ -37,7 +39,7 @@ function ExamCardList({ match }) {
     setQuestions(["loading"]);
     const url = `https://the-heritage.herokuapp.com/exam/${match.params.class}`;
 
-    const init = {
+    const init: FetchInitType = {
       method: "GET",
       mode: "cors",
       headers: { "Content-Type": "application/json" },
@@ -45,7 +47,7 @@ function ExamCardList({ match }) {
 
     fetch(url, init).then(res => {
       res.json().then(jsonData => {
-        const arr = jsonData.questions.map(question => {
+        const arr = jsonData.questions.map((question: any) => {
           return {
             id: question._id,
             ask: question.question,
@@ -61,7 +63,7 @@ function ExamCardList({ match }) {
       <div className={classes.title}>EXAM</div>
 
       <div className={classes.cardWrapper}>
-        {questions.map(question =>
+        {questions.map((question: any) =>
           question === "loading" ? (
             <LinearProgress key={question} />
           ) : (
@@ -71,6 +73,6 @@ function ExamCardList({ match }) {
       </div>
     </div>
   );
-}
+};
 
 export default withRouter(ExamCardList);
