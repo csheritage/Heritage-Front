@@ -1,11 +1,13 @@
 import React from "react";
-import { Redirect, withRouter } from "react-router-dom";
-// css-in-js
+import { Redirect, withRouter, RouteComponentProps } from "react-router-dom";
+// Type
+import { FetchInitType } from "@type/FetchInit";
+import { EditorMatchParams } from "./Edit.type";
+// CSS-In-JS
 import { makeStyles } from "@material-ui/styles";
 import { TextField, MenuItem, Button } from "@material-ui/core";
 import { CircularProgress } from "@material-ui/core";
-
-// custom-component
+// Custom-Component
 import SnackBar from "../Create/FormData/SnackBar";
 
 const useStyles = makeStyles({
@@ -41,13 +43,40 @@ const useStyles = makeStyles({
   },
 });
 
-function Editor({ match }) {
+const Editor: React.FC<RouteComponentProps<EditorMatchParams>> = ({ match }) => {
   const classes = useStyles();
   const [values, setValues] = React.useState({ loading: "loading" });
   const [saved, setSaved] = React.useState(false);
   const [openSanckbar, setOpenSnackbar] = React.useState(false);
   const [list, setList] = React.useState([]);
 
+  const editCategories = async () => {
+    const url: string = "https://the-heritage.herokuapp.com/categories";
+    const fetchInit: FetchInitType = {
+      method: "GET",
+      mode: "cors",
+      headers: { "Content-Type": "application/json" },
+    };
+    const fetchRes = await fetch(url, fetchInit);
+    const jsonData = await fetchRes.json();
+    const categories = jsonData.categories.map((v: any) => {
+      return { value: v, label: v };
+    });
+    setList(categories);
+
+    const dataUrl = `https://the-heritage.herokuapp.com/heritage/?_id=${match.params.id}`;
+    const dataFetchInit: FetchInitType = {
+      method: "GET",
+      mode: "cors",
+    };
+    const fetchDataRes = await fetch(dataUrl, dataFetchInit);
+    const dataJsonData = await fetchDataRes.json();
+    setValues({
+      class: dataJsonData.category,
+      company: dataJsonData.company,
+      question: dataJsonData.question,
+    });
+  };
   React.useEffect(() => {
     const url = "https://the-heritage.herokuapp.com/categories";
     const init = {
@@ -130,8 +159,7 @@ function Editor({ match }) {
               },
             }}
             margin="normal"
-            variant="outlined"
-          >
+            variant="outlined">
             {list.map(option => (
               <MenuItem key={option.value} value={option.value}>
                 {option.label}
@@ -174,6 +202,6 @@ function Editor({ match }) {
       <SnackBar open={openSanckbar} onClose={() => setOpenSnackbar(false)} />
     </>
   );
-}
+};
 
 export default withRouter(Editor);
