@@ -1,7 +1,7 @@
 import React from "react";
 import { withRouter, RouteComponentProps } from "react-router";
 // Type
-import { ExamCardList } from "./ExamCardList.type";
+import { ExamCardListMatchParams } from "./ExamCardList.type";
 // CSS-In-JS
 import { makeStyles } from "@material-ui/styles";
 import { LinearProgress } from "@material-ui/core";
@@ -31,7 +31,7 @@ const useStyles = makeStyles({
   },
 });
 
-const ExamCardList: React.FC<RouteComponentProps<ExamCardList>> = ({ match }) => {
+const ExamCardList: React.FC<RouteComponentProps<ExamCardListMatchParams>> = ({ match }) => {
   const classes = useStyles();
   const [questions, setQuestions] = React.useState(["loading"]);
 

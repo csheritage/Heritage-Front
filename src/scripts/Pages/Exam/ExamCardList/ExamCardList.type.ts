@@ -1,3 +1,3 @@
-export interface ExamCardList {
+export interface ExamCardListMatchParams {
   class: string;
 }
