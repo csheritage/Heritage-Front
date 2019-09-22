@@ -1,18 +1,17 @@
 import React from "react";
 // css-in-js
-import { makeStyles, useTheme } from "@material-ui/styles";
+import { makeStyles, Theme } from "@material-ui/core";
 import { Grid } from "@material-ui/core";
 
-const useStyles = makeStyles({
-  root: ({ jettBlack }) => ({
+const useStyles = makeStyles((theme: Theme) => ({
+  root: {
     height: "80vh",
-    color: jettBlack[500],
-  }),
-});
+    color: theme.jettBlack[500],
+  },
+}));
 
 function NoMatch() {
-  const { jettBlack } = useTheme();
-  const classes = useStyles({ jettBlack });
+  const classes = useStyles();
 
   return (
     <Grid container justify="center" alignItems="center" className={classes.root}>
