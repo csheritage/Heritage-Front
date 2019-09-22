@@ -11,9 +11,12 @@ const useStyles = makeStyles({
   },
 });
 
-function ExamCardList({ question }) {
+interface ExamCardListProps {
+  question: any;
+}
+const ExamCardList: React.FC<ExamCardListProps> = ({ question }) => {
   const classes = useStyles();
   return <div className={classes.cardWrapper}>{`- ${question}`}</div>;
-}
+};
 
 export default ExamCardList;
