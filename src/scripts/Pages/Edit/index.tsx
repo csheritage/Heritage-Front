@@ -1,10 +1,14 @@
 import React from "react";
-import { Redirect } from "react-router-dom";
-// css-in-js
+import { Redirect, withRouter, RouteComponentProps } from "react-router-dom";
+// Type
+import { FetchInitType } from "@type/FetchInit";
+import { EditorMatchParams } from "./Edit.type";
+// CSS-In-JS
 import { makeStyles } from "@material-ui/styles";
 import { TextField, MenuItem, Button } from "@material-ui/core";
-// custom-component
-import SnackBar from "./SnackBar";
+import { CircularProgress } from "@material-ui/core";
+// Custom-Component
+import SnackBar from "../Create/FormData/SnackBar";
 
 const useStyles = makeStyles({
   textField: {
@@ -34,37 +38,50 @@ const useStyles = makeStyles({
     right: "1rem",
     width: "5rem",
   },
+  loaderWrapper: {
+    margin: "5rem",
+  },
 });
 
-function FormData({ formNum }) {
+const Editor: React.FC<RouteComponentProps<EditorMatchParams>> = ({ match }) => {
   const classes = useStyles();
-  const [values, setValues] = React.useState({
-    class: "ios",
-    company: "",
-  });
+  const [values, setValues] = React.useState<any>({ loading: "loading" });
   const [saved, setSaved] = React.useState(false);
   const [openSanckbar, setOpenSnackbar] = React.useState(false);
   const [list, setList] = React.useState([]);
 
-  React.useEffect(() => {
-    const url = "https://the-heritage.herokuapp.com/categories";
-    const init = {
+  const editCategories = async () => {
+    const url: string = "https://the-heritage.herokuapp.com/categories";
+    const fetchInit: FetchInitType = {
       method: "GET",
       mode: "cors",
       headers: { "Content-Type": "application/json" },
     };
-
-    fetch(url, init).then(res => {
-      res.json().then(jsonData => {
-        const categories = jsonData.categories.map(v => {
-          return { value: v, label: v };
-        });
-        setList(categories);
-      });
+    const fetchRes = await fetch(url, fetchInit);
+    const jsonData = await fetchRes.json();
+    const categories = jsonData.categories.map((v: any) => {
+      return { value: v, label: v };
     });
-  }, []);
+    setList(categories);
 
-  const handleChange = name => event => {
+    const dataUrl = `https://the-heritage.herokuapp.com/heritage/?_id=${match.params.id}`;
+    const dataFetchInit: FetchInitType = {
+      method: "GET",
+      mode: "cors",
+    };
+    const fetchDataRes = await fetch(dataUrl, dataFetchInit);
+    const dataJsonData = await fetchDataRes.json();
+    setValues({
+      class: dataJsonData.category,
+      company: dataJsonData.company,
+      question: dataJsonData.question,
+    });
+  };
+  React.useEffect(() => {
+    editCategories();
+  }, [match]);
+
+  const handleChange = (name: any) => (event: any) => {
     setValues({ ...values, [name]: event.target.value });
   };
 
@@ -73,26 +90,28 @@ function FormData({ formNum }) {
       setOpenSnackbar(true);
       return;
     }
-
-    const dataArr = Object.keys(values);
-    const questionArr = dataArr.filter(v => !isNaN(+v)).map(v => values[v]);
-    const url = "https://the-heritage.herokuapp.com/heritage";
+    const url = `https://the-heritage.herokuapp.com/heritage/?_id=${match.params.id}`;
     const obj = {
       category: values.class,
       company: values.company,
-      questions: questionArr,
+      question: values.question,
     };
-    const init = {
-      method: "POST",
+    const init: FetchInitType = {
+      method: "PUT",
       mode: "cors",
       body: JSON.stringify(obj),
       headers: { "Content-Type": "application/json" },
     };
-    await fetch(url, init);
-    await setSaved(true);
+    const fetchedData = await fetch(url, init);
+    if (fetchedData.status === 200) {
+      setSaved(true);
+    }
   };
-
-  return (
+  return values.loading === "loading" ? (
+    <div className={classes.loaderWrapper}>
+      <CircularProgress />
+    </div>
+  ) : (
     <>
       <form id="form" className={classes.container} noValidate autoComplete="off">
         <div>
@@ -109,9 +128,8 @@ function FormData({ formNum }) {
               },
             }}
             margin="normal"
-            variant="outlined"
-          >
-            {list.map(option => (
+            variant="outlined">
+            {list.map((option: any) => (
               <MenuItem key={option.value} value={option.value}>
                 {option.label}
               </MenuItem>
@@ -131,30 +149,28 @@ function FormData({ formNum }) {
           />
         </div>
         <div>
-          {new Array(formNum).fill(0).map((v, i) => (
-            <TextField
-              key={i}
-              id="outlined-full-width"
-              label="QUESTION"
-              className={classes.question}
-              fullWidth
-              margin="normal"
-              variant="outlined"
-              onChange={handleChange(i)}
-              InputLabelProps={{
-                shrink: true,
-              }}
-            />
-          ))}
+          <TextField
+            id="outlined-full-width"
+            label="QUESTION"
+            className={classes.question}
+            fullWidth
+            margin="normal"
+            value={values.question}
+            variant="outlined"
+            onChange={handleChange("question")}
+            InputLabelProps={{
+              shrink: true,
+            }}
+          />
         </div>
       </form>
       <Button variant="contained" onClick={() => submit()} className={classes.submitButton}>
-        저장
+        수정
       </Button>
-      {saved && <Redirect to={values.class} />}
+      {saved && <Redirect to={`/${values.class}`} />}
       <SnackBar open={openSanckbar} onClose={() => setOpenSnackbar(false)} />
     </>
   );
-}
+};
 
-export default FormData;
+export default withRouter(Editor);

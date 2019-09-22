@@ -1,12 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
-// css-in-js
-import { makeStyles } from "@material-ui/styles";
+// Type
+import { ContentCardProps } from "./ContentCard.type";
+import { FetchInitType } from "@type/FetchInit";
+// CSS-In-JS
+import { makeStyles, Theme } from "@material-ui/core";
 import { Paper, Button } from "@material-ui/core";
-// custom-components
-import Dialog from "./Dialog";
+// Custom-Components
+import AlertDialog from "./AlertDialog";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme: Theme) => ({
   cardWrapper: {
     padding: "1rem",
     display: "flex",
@@ -20,7 +23,7 @@ const useStyles = makeStyles({
     color: "#fff",
     fontSize: "0.7rem",
     borderRadius: "2rem",
-    backgroundColor: "#99958b",
+    backgroundColor: theme.jettBlack[300],
     display: "inline-block",
     padding: "0.4rem",
   },
@@ -33,8 +36,8 @@ const useStyles = makeStyles({
   },
   paperWrapper: {
     margin: "1rem 0rem",
-    backgroundColor: "#45433e",
-    color: "#fff8e7",
+    backgroundColor: theme.jettBlack[100],
+    color: theme.jettBlack[500],
   },
   link: {
     textDecoration: "none",
@@ -42,26 +45,24 @@ const useStyles = makeStyles({
   logoContainer: {
     display: "flex",
   },
-});
+}));
 
-function ContentCard({ data, setUpdated, updated }) {
+const ContentCard: React.FC<ContentCardProps> = ({ data, setUpdated }) => {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
-  const [targetId, setTargetId] = React.useState("");
+  const [open, setOpen] = React.useState<boolean>(false);
+  const [targetId, setTargetId] = React.useState<string>("");
 
-  function handleDelete(id) {
+  const handleDelete = async (id: string) => {
     const url = `https://the-heritage.herokuapp.com/heritage/?_id=${id}`;
 
-    const init = {
+    const fetchInit: FetchInitType = {
       method: "DELETE",
       mode: "cors",
       headers: { "Content-Type": "application/json" },
     };
-
-    fetch(url, init).then(res => {
-      setUpdated(updated + 1);
-    });
-  }
+    await fetch(url, fetchInit);
+    setUpdated();
+  };
 
   function handleOpen() {
     setOpen(true);
@@ -71,17 +72,17 @@ function ContentCard({ data, setUpdated, updated }) {
     <Paper className={classes.paperWrapper}>
       <div className={classes.companyName}>{data[0].company}</div>
       <hr className={classes.line} />
-      {data.map(v => (
+      {data.map((v: any) => (
         <div className={classes.cardWrapper} key={v._id}>
           <div className={classes.title}>{`- ${v.question}`}</div>
           <div className={classes.logoContainer}>
+            {console.log(v)}
             <Button
               key={v._id}
               onClick={() => {
                 setTargetId(v._id);
                 handleOpen();
-              }}
-            >
+              }}>
               <i className="material-icons" style={{ color: "#fff8e7" }}>
                 delete
               </i>
@@ -96,15 +97,15 @@ function ContentCard({ data, setUpdated, updated }) {
           </div>
         </div>
       ))}
-      <Dialog
+      <AlertDialog
         open={open}
-        setOpen={setOpen}
+        handleClose={() => setOpen(false)}
         handleFunc={() => {
           handleDelete(targetId);
         }}
       />
     </Paper>
   );
-}
+};
 
 export default ContentCard;

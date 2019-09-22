@@ -1,9 +1,10 @@
 import React from "react";
-import { withRouter } from "react-router";
+import { withRouter, RouteComponentProps } from "react-router";
 import { Link } from "react-router-dom";
 // css-in-js
 import { makeStyles } from "@material-ui/styles";
 import { Button } from "@material-ui/core";
+import { FetchInitType } from "@type/FetchInit";
 
 const useStyles = makeStyles({
   content: {
@@ -29,7 +30,7 @@ const useStyles = makeStyles({
   },
 });
 
-function Exam({ match }) {
+const Exam: React.FC<RouteComponentProps> = ({ match }) => {
   const classes = useStyles();
   const [classArr, setClassArr] = React.useState(["loading"]);
 
@@ -37,7 +38,7 @@ function Exam({ match }) {
     setClassArr(["loading"]);
     const url = `https://the-heritage.herokuapp.com/exam`;
 
-    const init = {
+    const init: FetchInitType = {
       method: "GET",
       mode: "cors",
     };
@@ -58,6 +59,6 @@ function Exam({ match }) {
       ))}
     </div>
   );
-}
+};
 
 export default withRouter(Exam);
