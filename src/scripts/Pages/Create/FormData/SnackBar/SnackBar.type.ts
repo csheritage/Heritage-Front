@@ -1,4 +1,4 @@
-export interface SnackBarProps {
+export interface SnackBarContentWrapperProps {
   open: boolean;
   onClose: () => void;
 }
