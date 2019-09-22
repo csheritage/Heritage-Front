@@ -25,29 +25,27 @@ const useStyles = makeStyles({
   },
 });
 
-function Create() {
+const Create: React.FC = () => {
   const classes = useStyles();
   const [formNum, setFormNum] = React.useState(1);
 
   return (
     <div className={classes.form}>
-      <FormData formNum={formNum} setFormNum={setFormNum} />
+      <FormData formNum={formNum} />
       <Button
         variant="contained"
         onClick={() => setFormNum(formNum + 1)}
-        className={classes.addButton}
-      >
+        className={classes.addButton}>
         폼 추가
       </Button>
       <Button
         variant="contained"
         onClick={() => setFormNum(formNum - 1)}
-        className={classes.removeButton}
-      >
+        className={classes.removeButton}>
         폼 제거
       </Button>
     </div>
   );
-}
+};
 
 export default Create;
