@@ -1,18 +1,17 @@
 import React from "react";
-// css-in-js
-import { makeStyles, useTheme } from "@material-ui/styles";
-// custom-component
+// CSS-In-JS
+import { makeStyles, Theme } from "@material-ui/core";
 
-const useStyles = makeStyles({
-  root: ({ jettBlack }) => ({
+const useStyles = makeStyles((theme: Theme) => ({
+  root: {
     width: "100%",
     height: "100vh",
     display: "flex",
-    backgroundColor: jettBlack[300],
-    color: jettBlack[100],
+    backgroundColor: theme.jettBlack[300],
+    color: theme.jettBlack[100],
     justifyContent: "center",
     flexDirection: "column",
-  }),
+  },
   text: {
     textAlign: "center",
     fontSize: "3rem",
@@ -20,13 +19,11 @@ const useStyles = makeStyles({
   },
   notification: {
     textAlign: "left",
-    fontWeight: "Bold",
   },
-});
+}));
 
 function Main() {
-  const { jettBlack } = useTheme();
-  const classes = useStyles({ jettBlack });
+  const classes = useStyles();
 
   return (
     <div className={classes.root}>
