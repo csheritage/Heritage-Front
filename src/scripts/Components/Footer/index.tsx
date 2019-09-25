@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 const footerMsg = `무단 배포를 엄금합니다.`;
 
-function Footer() {
+const Footer: React.FC = () => {
   const classes = useStyles();
 
   return (
@@ -30,6 +30,6 @@ function Footer() {
       </Grid>
     </footer>
   );
-}
+};
 
 export default Footer;
