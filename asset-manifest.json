@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/Heritage-Front/static/css/main.a2531c7a.chunk.css",
-    "main.js": "/Heritage-Front/static/js/main.f05e1b5c.chunk.js",
-    "main.js.map": "/Heritage-Front/static/js/main.f05e1b5c.chunk.js.map",
+    "main.js": "/Heritage-Front/static/js/main.1bf9e0f0.chunk.js",
+    "main.js.map": "/Heritage-Front/static/js/main.1bf9e0f0.chunk.js.map",
     "runtime~main.js": "/Heritage-Front/static/js/runtime~main.aec4f492.js",
     "runtime~main.js.map": "/Heritage-Front/static/js/runtime~main.aec4f492.js.map",
     "static/js/2.6ed9b4f0.chunk.js": "/Heritage-Front/static/js/2.6ed9b4f0.chunk.js",
     "static/js/2.6ed9b4f0.chunk.js.map": "/Heritage-Front/static/js/2.6ed9b4f0.chunk.js.map",
     "index.html": "/Heritage-Front/index.html",
-    "precache-manifest.3040974e61b5bfaaf3dbeababd92c520.js": "/Heritage-Front/precache-manifest.3040974e61b5bfaaf3dbeababd92c520.js",
+    "precache-manifest.7916279fc15b2d81fba2ceb48ae51e9e.js": "/Heritage-Front/precache-manifest.7916279fc15b2d81fba2ceb48ae51e9e.js",
     "service-worker.js": "/Heritage-Front/service-worker.js",
     "static/css/main.a2531c7a.chunk.css.map": "/Heritage-Front/static/css/main.a2531c7a.chunk.css.map"
   }
