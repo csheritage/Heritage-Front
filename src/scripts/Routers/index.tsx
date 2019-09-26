@@ -14,7 +14,7 @@ import ExamCardList from "../Pages/Exam/ExamCardList";
 
 function PageRouter() {
   return (
-    <Router>
+    <Router basename={"Heritage-Front"}>
       <>
         <Route component={Header} />
         <div style={{ display: "flex" }}>
